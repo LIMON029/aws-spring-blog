@@ -1,9 +1,11 @@
 package com.limon.awsspringblog.domain.posts
 
+import com.limon.awsspringblog.domain.BaseTimeEntity
+import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-class Posts {
+class Posts: BaseTimeEntity{
     constructor()
     constructor(title: String, content: String, author: String) : this() {
         this.title = title
@@ -26,6 +28,10 @@ class Posts {
     fun getTitle():String = title
     fun getContent():String? = content
     fun getAuthor():String = author
+
+    fun update(id:Long){
+        this.id = id
+    }
 
     fun update(title:String, content:String){
         this.title = title

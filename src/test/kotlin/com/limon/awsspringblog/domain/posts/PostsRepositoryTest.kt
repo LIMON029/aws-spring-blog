@@ -5,6 +5,7 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import java.time.LocalDateTime
 
 @SpringBootTest
 internal class PostsRepositoryTest {
@@ -30,5 +31,20 @@ internal class PostsRepositoryTest {
         println(post)
         assertThat(post.getTitle()).isEqualTo(title)
         assertThat(post.getContent()).isEqualTo(content)
+    }
+
+    @Test
+    fun BaseTimeEntity_등록() {
+        val now = LocalDateTime.of(2019,6,4,0,0,0,0)
+
+        repository.save(Posts(title = "title", content = "content", author = "author"))
+
+        val postsList = repository.findAll()
+        val post = postsList[0]
+
+        println(">>>>>> createdDate = ${post.createdDate}, modifiedDate = ${post.modifiedDate}")
+
+        assertThat(post.createdDate).isAfter(now)
+        assertThat(post.modifiedDate).isAfter(now)
     }
 }
