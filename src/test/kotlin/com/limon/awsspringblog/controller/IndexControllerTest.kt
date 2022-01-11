@@ -16,6 +16,6 @@ internal class IndexControllerTest {
     fun index() {
         val body = this.restTemplate.getForObject("/", String::class.java)
 
-        assertThat(body).contains("스프링 부트로 시작하는 웹 서비스")
+        assertThat(body).contains("게시글 목록")
     }
 }

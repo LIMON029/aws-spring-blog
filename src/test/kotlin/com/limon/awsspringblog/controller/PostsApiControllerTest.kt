@@ -1,20 +1,27 @@
 package com.limon.awsspringblog.controller
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.limon.awsspringblog.domain.posts.Posts
 import com.limon.awsspringblog.domain.posts.PostsRepository
 import com.limon.awsspringblog.dto.PostsSaveRequestDto
 import com.limon.awsspringblog.dto.PostsUpdateRequestDto
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.boot.web.server.LocalServerPort
-import org.springframework.http.HttpEntity
-import org.springframework.http.HttpMethod
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
+import org.springframework.http.MediaType
+import org.springframework.security.test.context.support.WithMockUser
+import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
+import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import org.springframework.web.context.WebApplicationContext
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 internal class PostsApiControllerTest(@LocalServerPort private val port: Int) {
@@ -22,13 +29,23 @@ internal class PostsApiControllerTest(@LocalServerPort private val port: Int) {
     private lateinit var restTemplate: TestRestTemplate
     @Autowired
     private lateinit var postsRepository: PostsRepository
+    @Autowired
+    private lateinit var context: WebApplicationContext
+
+    private lateinit var mvc:MockMvc
 
     @AfterEach
     fun tearDown() {
         postsRepository.deleteAll()
     }
 
+    @BeforeEach
+    fun setup() {
+        mvc = MockMvcBuilders.webAppContextSetup(context).apply<DefaultMockMvcBuilder?>(springSecurity()).build()
+    }
+
     @Test
+    @WithMockUser(roles = ["USER"])
     fun save() {
         val title = "title"
         val content = "content"
@@ -37,10 +54,10 @@ internal class PostsApiControllerTest(@LocalServerPort private val port: Int) {
         val requestDto = PostsSaveRequestDto(title, content, author)
         val url = "http://localhost:${port}/api/v1/posts"
 
-        val responseEntity = restTemplate.postForEntity(url, requestDto, Long::class.java)
-
-        assertThat(responseEntity.statusCode).isEqualTo(HttpStatus.OK)
-        assertThat(responseEntity.body).isGreaterThan(0L)
+        mvc.perform(MockMvcRequestBuilders.post(url)
+            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .content(ObjectMapper().writeValueAsString(requestDto)))
+            .andExpect(MockMvcResultMatchers.status().isOk)
 
         val all = postsRepository.findAll()
         assertThat(all[0].getTitle()).isEqualTo(title)
@@ -48,6 +65,7 @@ internal class PostsApiControllerTest(@LocalServerPort private val port: Int) {
     }
 
     @Test
+    @WithMockUser(roles = ["USER"])
     fun update() {
         val savedPosts = postsRepository.save(Posts(title = "title", content = "content", author = "author"))
         val new_title = "title2"
@@ -55,12 +73,11 @@ internal class PostsApiControllerTest(@LocalServerPort private val port: Int) {
         val updatedId = savedPosts.getId()
         val requestDto = PostsUpdateRequestDto(new_title, new_content)
         val url = "http://localhost:${port}/api/v1/posts/$updatedId"
-        val requestEntity = HttpEntity<PostsUpdateRequestDto>(requestDto)
 
-        val responseEntity = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Long::class.java)
-
-        assertThat(responseEntity.statusCode).isEqualTo(HttpStatus.OK)
-        assertThat(responseEntity.body).isGreaterThan(0L)
+        mvc.perform(MockMvcRequestBuilders.put(url)
+            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .content(ObjectMapper().writeValueAsString(requestDto)))
+            .andExpect(MockMvcResultMatchers.status().isOk)
 
         val all = postsRepository.findAll()
         assertThat(all[0].getTitle()).isEqualTo(new_title)
