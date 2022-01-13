@@ -7,7 +7,9 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit.jupiter.SpringExtension
+import java.sql.Timestamp
 import java.time.LocalDateTime
+import java.util.*
 
 @ExtendWith(SpringExtension::class)
 @SpringBootTest
@@ -39,7 +41,6 @@ internal class PostsRepositoryTest {
     @Test
     fun baseTimeEntity_save() {
         val now = LocalDateTime.of(2019,6,4,0,0,0,0)
-
         repository.save(Posts(title = "title", content = "content", author = "author"))
 
         val postsList = repository.findAll()
