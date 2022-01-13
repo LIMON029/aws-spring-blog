@@ -1,7 +1,7 @@
 package com.limon.awsspringblog.domain.posts
 
-import com.limon.awsspringblog.domain.BaseTimeEntity
-import java.time.LocalDateTime
+import org.hibernate.annotations.CreationTimestamp
+import java.sql.Timestamp
 import javax.persistence.*
 
 @Entity
@@ -24,10 +24,17 @@ class Posts{
     private var content: String ?= "TEXT"
     private lateinit var author: String
 
+    @CreationTimestamp
+    private lateinit var createdDate: Timestamp
+    @CreationTimestamp
+    private lateinit var modifiedDate: Timestamp
+
     fun getId():Long? = id
     fun getTitle():String = title
     fun getContent():String? = content
     fun getAuthor():String = author
+    fun getCreatedDate():Timestamp = createdDate
+    fun getModifiedDate():Timestamp = modifiedDate
 
     fun update(id:Long){
         this.id = id
