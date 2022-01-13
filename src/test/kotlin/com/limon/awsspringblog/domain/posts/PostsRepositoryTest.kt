@@ -37,7 +37,7 @@ internal class PostsRepositoryTest {
     }
 
     @Test
-    fun BaseTimeEntity_save() {
+    fun baseTimeEntity_save() {
         val now = LocalDateTime.of(2019,6,4,0,0,0,0)
 
         repository.save(Posts(title = "title", content = "content", author = "author"))

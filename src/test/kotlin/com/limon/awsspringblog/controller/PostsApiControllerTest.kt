@@ -29,8 +29,6 @@ import org.springframework.web.context.WebApplicationContext
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 internal class PostsApiControllerTest(@LocalServerPort private val port: Int) {
     @Autowired
-    private lateinit var restTemplate: TestRestTemplate
-    @Autowired
     private lateinit var postsRepository: PostsRepository
     @Autowired
     private lateinit var context: WebApplicationContext
