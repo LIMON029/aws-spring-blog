@@ -18,7 +18,7 @@ internal class PostsRepositoryTest {
     }
 
     @Test
-    fun 게시글저장_불러오기() {
+    fun load_post() {
         val title = "테스트 게시글"
         val content = "테스트 본문"
         val author = "koko@gmail.com"
@@ -34,7 +34,7 @@ internal class PostsRepositoryTest {
     }
 
     @Test
-    fun BaseTimeEntity_등록() {
+    fun BaseTimeEntity_save() {
         val now = LocalDateTime.of(2019,6,4,0,0,0,0)
 
         repository.save(Posts(title = "title", content = "content", author = "author"))
