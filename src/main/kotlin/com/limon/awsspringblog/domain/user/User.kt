@@ -9,7 +9,7 @@ import javax.persistence.*
 class User: BaseTimeEntity {
     constructor()
     constructor(name: String, email:String, picture:String, role:Role){
-        this.name = name
+        this.username = name
         this.email = email
         this.picture = picture
         this.role = role
@@ -20,7 +20,7 @@ class User: BaseTimeEntity {
     private var id:Long ?= 0L
 
     @Column(nullable = false)
-    private lateinit var name: String
+    private lateinit var username: String
 
     @Column(nullable = false)
     private lateinit var email: String
@@ -33,21 +33,21 @@ class User: BaseTimeEntity {
     private lateinit var role: Role
 
     fun getId():Long? = id
-    fun getName():String = name
+    fun getName():String = username
     fun getEmail():String = email
     fun getPicture():String = picture
     fun getRole():Role = role
     fun getRoleKey():String = role.key
 
     fun update(name:String, picture:String): User {
-        this.name = name
+        this.username = name
         this.picture = picture
 
         return this
     }
 
     override fun toString(): String {
-        return "User(id=$id, name=$name, email=$email, role=$role)"
+        return "User(id=$id, name=$username, email=$email, role=$role)"
     }
 
     override fun hashCode(): Int {
