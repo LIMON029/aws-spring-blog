@@ -5,8 +5,7 @@ import org.springframework.boot.runApplication
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 
 @SpringBootApplication
-class AwsSpringBlogApplication{
+class AwsSpringBlogApplication
 	fun main(args: Array<String>) {
 		runApplication<AwsSpringBlogApplication>(*args)
 	}
-}
