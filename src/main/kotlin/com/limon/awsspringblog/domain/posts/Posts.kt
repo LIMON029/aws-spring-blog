@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-class Posts: BaseTimeEntity{
+class Posts{
     constructor()
     constructor(title: String, content: String, author: String) : this() {
         this.title = title
