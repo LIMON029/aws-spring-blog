@@ -11,7 +11,7 @@ internal class HelloResponseDtoTest {
 
         val dto = HelloResponseDto(name, amount)
 
-        assertThat(dto.name).isEqualTo(name)
+        assertThat(dto.username).isEqualTo(name)
         assertThat(dto.amount).isEqualTo(amount)
     }
 }

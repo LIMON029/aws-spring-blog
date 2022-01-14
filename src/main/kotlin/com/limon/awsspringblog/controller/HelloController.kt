@@ -14,7 +14,7 @@ class HelloController {
 
     @GetMapping("/hello/dto")
     fun helloDto(
-        @RequestParam("name") name: String,
+        @RequestParam("username") name: String,
         @RequestParam("amount") amount: Int
     ): HelloResponseDto {
         return HelloResponseDto(name, amount)

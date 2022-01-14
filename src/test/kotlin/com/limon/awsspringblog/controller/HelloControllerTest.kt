@@ -34,9 +34,9 @@ internal class HelloControllerTest {
         val name = "hello"
         val amount = 1000
 
-        mvc.perform(get("/hello/dto").param("name", name).param("amount", amount.toString()))
+        mvc.perform(get("/hello/dto").param("username", name).param("amount", amount.toString()))
             .andExpect(status().isOk)
-            .andExpect(jsonPath("$.name").value(name))
+            .andExpect(jsonPath("$.username").value(name))
             .andExpect(jsonPath("$.amount").value(amount.toString()))
     }
 }
