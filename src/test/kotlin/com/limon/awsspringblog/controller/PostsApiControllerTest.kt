@@ -80,7 +80,7 @@ internal class PostsApiControllerTest(@LocalServerPort private val port: Int) {
             .andExpect(MockMvcResultMatchers.status().isOk)
 
         val all = postsRepository.findAll()
-        assertThat(all[0].getTitle()).isEqualTo(new_title)
-        assertThat(all[0].getContent()).isEqualTo(new_content)
+        assertThat(all[all.size-1].getTitle()).isEqualTo(new_title)
+        assertThat(all[all.size-1].getContent()).isEqualTo(new_content)
     }
 }
