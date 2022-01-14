@@ -54,8 +54,7 @@ class PostsService(val postsRepository:PostsRepository, val jdbcTemplate: JdbcTe
                 jdbcTemplate.update("update posts set id=? where id=?", i.toLong(), postsList[i-1].getId())
             }
         }
-        val sql = "ALTER TABLE posts ALTER COLUMN id RESTART WITH ${max+1}"
-        // real-db일 때는 val sql = "ALTER TABLE posts auto_increment=${max+1}"
+        val sql = "ALTER TABLE posts auto_increment=${max+1}"
         jdbcTemplate.execute(sql)
     }
 }
