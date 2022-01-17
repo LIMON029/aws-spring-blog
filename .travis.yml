@@ -1,6 +1,6 @@
 language: java
 os: linux
-
+dist: xenial
 jdk:
   - openjdk11
 
@@ -35,7 +35,7 @@ deploy:
     skip_cleanup: true
     acl: private
     local_dir: deploy
-    wait-until_deployed: true
+    wait_until_deployed: true
 
   - provider: codedeploy
     access_key_id: $AWS_ACCESS_KEY  # Travis repo settings에 설정된 값
