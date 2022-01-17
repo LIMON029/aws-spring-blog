@@ -9,9 +9,7 @@ branches:
 before_install:
   - chmod +x gradlew
   - rvm install 3.0.3
-  - rvm list
   - rvm --default use 3.0.3
-  - rvm list
 
 # Travis CI 서버의 Home
 cache:
@@ -24,7 +22,7 @@ script: "./gradlew clean build"
 before_deploy:
   - zip -r aws-spring-blog *
   - mkdir -p deploy
-  - mv aws-spring-blog.zip deploy/aws-spring-blog.zip
+  - mv aws-spring-blog-webservice.zip deploy/aws-spring-blog-webservice.zip
 
 deploy:
   - provider: s3
@@ -36,6 +34,7 @@ deploy:
     acl: private
     local_dir: deploy
     wait-until-deployed: true
+
   - provider: codedeploy
     access_key_id: $AWS_ACCESS_KEY  # Travis repo settings에 설정된 값
     secret_access_key: $AWS_SECRET_KEY  # Travis repo settings에 설정된 값
