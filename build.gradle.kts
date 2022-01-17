@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "com.limon"
-version = "1.0.1-SNAPSHOT"
+version = "2.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
