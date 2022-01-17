@@ -1,4 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 plugins {
 	id("org.springframework.boot") version "2.6.2"
@@ -9,7 +11,7 @@ plugins {
 }
 
 group = "com.limon"
-version = "2.0.1-SNAPSHOT"
+version = "1.0.1-SNAPSHOT-${LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmSS"))}"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
