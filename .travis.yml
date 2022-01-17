@@ -10,8 +10,6 @@ branches:
 
 before_install:
   - chmod +x gradlew
-  - rvm install 3.0.3
-  - rvm --default use 3.0.3
 
 # Travis CI 서버의 Home
 cache:
