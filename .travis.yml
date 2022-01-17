@@ -2,12 +2,6 @@ language: java
 jdk:
   - openjdk11
 
-ruby:
-  - 3.0.3
-
-rvm:
-  - 3.0.3
-
 branches:
   only:
     - master
@@ -15,6 +9,9 @@ branches:
 before_install:
   - chmod +x gradlew
   - rvm install 3.0.3
+  - rvm list
+  - rvm --default use 2.4.0
+  - rvm list
 
 # Travis CI 서버의 Home
 cache:
