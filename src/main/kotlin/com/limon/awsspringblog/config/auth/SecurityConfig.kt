@@ -16,7 +16,7 @@ class SecurityConfig(private val customOAuth2UserService: CustomOAuth2UserServic
                     .and()
                 authorizeRequests() // URL 별 권한 관리
                     .antMatchers(
-                    "/", "/css/**", "/images/**", "/js/**", "/h2-console/**"
+                    "/", "/css/**", "/images/**", "/js/**", "/h2-console/**", "/profile"
                     ).permitAll()
                     .antMatchers("/api/v1/**").hasRole(Role.USER.name).anyRequest().authenticated()
                     .and()
