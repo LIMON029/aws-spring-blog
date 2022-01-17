@@ -10,7 +10,7 @@ before_install:
   - chmod +x gradlew
   - rvm install 3.0.3
   - rvm list
-  - rvm --default use 2.4.0
+  - rvm --default use 3.0.3
   - rvm list
 
 # Travis CI 서버의 Home
