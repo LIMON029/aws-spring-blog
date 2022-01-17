@@ -1,4 +1,6 @@
 language: java
+os: linux
+
 jdk:
   - openjdk11
 
@@ -22,7 +24,7 @@ script: "./gradlew clean build"
 before_deploy:
   - zip -r aws-spring-blog *
   - mkdir -p deploy
-  - mv aws-spring-blog.zip deploy/aws-spring-blog-webservice.zip
+  - mv aws-spring-blog-webservice.zip deploy/aws-spring-blog-webservice.zip
 
 deploy:
   - provider: s3
@@ -33,18 +35,18 @@ deploy:
     skip_cleanup: true
     acl: private
     local_dir: deploy
-    wait-until-deployed: true
+    wait-until_deployed: true
 
   - provider: codedeploy
     access_key_id: $AWS_ACCESS_KEY  # Travis repo settings에 설정된 값
     secret_access_key: $AWS_SECRET_KEY  # Travis repo settings에 설정된 값
     bucket: aws-springboot-blog-build #s3 버킷
     key: aws-spring-blog-webservice.zip
-    build_type: zip
+    bundle_type: zip
     application: aws-spring-blog-webservice
     deployment_group: aws-spring-blog-webservice-group
     region: ap-northeast-2
-    wait-until-deployed: true
+    wait_until_deployed: true
 
 # CI 실행 완료시 메일로 알람
 notifications:
