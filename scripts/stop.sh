@@ -5,7 +5,7 @@ ABSDIR=$(dirname $ABSPATH)
 source ${ABSDIR}/profile.sh
 
 echo "> $IDLE_PORT 에서 구동 중인 애플리케이션 pid 확인"
-IDLE_PID=$(pgrep -fa aws-spring-blog | grep jar | awk '{print $1}')
+IDLE_PID=$(pgrep -fl aws-spring-blog | grep java | awk '{print $1}')
 
 if [ -z ${IDLE_PID} ]
 then
